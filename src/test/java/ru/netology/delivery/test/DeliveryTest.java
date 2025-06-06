@@ -17,9 +17,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 class DeliveryTest {
 
-    public long convert(int gap) {
-        return LocalDate.now().plusDays(gap).atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000;
-    }
+
 
     @BeforeEach
     void setup() {
@@ -148,7 +146,6 @@ class DeliveryTest {
         if (LocalDate.now().getMonthValue() != LocalDate.now().plusDays(daysToAddForFirstMeeting).getMonthValue()) {
             $("[data-step='1']").click();
         }
-        $("[data-day='" + convert(daysToAddForFirstMeeting) + "']").click();
         $("[data-test-id='name'] input").val(validUser.getName());
         $("[data-test-id='phone'] input").val(validUser.getPhone());
         $("[data-test-id='agreement']").click();
@@ -164,6 +161,7 @@ class DeliveryTest {
         $("[data-test-id='success-notification'] .notification__title").shouldBe(visible).shouldBe(exactText("Успешно!"));
         $("[data-test-id='success-notification'] .notification__content").shouldBe(visible).shouldBe(exactText("Встреча успешно запланирована на " + secondMeetingDate));
     }
+
 
     @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/negativecity.csv", delimiter = '|')
